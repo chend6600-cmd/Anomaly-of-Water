@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Anomaly of Water</title>
+    
+    <link rel="stylesheet" href="style.css">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+
+    <style>
+        #loading-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100vh;
+            background-color: #000023; z-index: 10000;
+            display: flex; justify-content: center; align-items: center;
+            transition: opacity 1.5s ease-out;
+        }
+        .loader-container { text-align: center; width: 300px; }
+        .loading-bar { width: 100%; height: 20px; border: 2px solid #FF006A; padding: 2px; box-sizing: border-box; }
+        
+        .loading-progress { 
+            width: 0%; 
+            height: 100%; 
+            background-color: #FF006A; 
+            
+            /* השינוי הוא כאן: */
+            /* השתמשתי ב-ease-out לתנועה חלקה שמאטה בסוף */
+            /* הגדלתי את הזמן ל-20 שניות כדי שההאטה בסוף תהיה ממש מורגשת */
+            animation: fakeLoadSmooth 20s ease-out forwards;
+            
+            /* הטרנזישן הזה מטפל רק בקפיצה הסופית מ-95% ל-100% */
+            transition: width 0.5s ease-out; 
+        }
+
+        /* keyframes פשוטים הרבה יותר - רק התחלה וסוף */
+        @keyframes fakeLoadSmooth {
+            from { width: 0%; }
+            to { width: 95%; } /* יגיע לפה לאט ויחכה */
+        }
+        
+        .loading-text { color: #FF006A; font-family: 'IBMPlexSans-Light', sans-serif; font-size: 12px; margin-top: 10px; letter-spacing: 2px; opacity: 0.7; direction: ltr; }
+        
+        .fade-out { opacity: 0; pointer-events: none; }
+    </style>
+</head>
+<body>
+
+    <div id="loading-screen">
+        <div class="loader-container">
+            <div class="loading-bar">
+                <div class="loading-progress" id="progressBar"></div>
+            </div>
+            <p class="loading-text">LOADING ANOMALY...</p>
+        </div>
+    </div>
+
+    <script>
+        // הסקריפט נשאר פשוט - רק מסיים את העבודה כשהאתר מוכן
+        function finishLoading() {
+            const progressBar = document.getElementById('progressBar');
+            if(progressBar) {
+                // מבטלים את האנימציה הארוכה
+                progressBar.style.animation = 'none';
+                
+                // נותנים לדפדפן שנייה להתאפס ואז משלימים ל-100%
+                // ה-transition ב-CSS יעשה את ההשלמה הזו חלקה
+                requestAnimationFrame(() => {
+                    progressBar.style.width = '100%';
+                });
+            }
+            
+            // מחכים קצת שיראו את ה-100% ואז מעלימים
+            setTimeout(() => {
+                const loadingScreen = document.getElementById('loading-screen');
+                if (loadingScreen) {
+                    loadingScreen.classList.add('fade-out');
+                    setTimeout(() => { loadingScreen.remove(); }, 1500);
+                }
+            }, 800); 
+        }
+    </script>
+
+    <script src="sketch.js"></script>
+
+</body>
+</html>

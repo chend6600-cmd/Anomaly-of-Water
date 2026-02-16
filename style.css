@@ -1,0 +1,56 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    
+    /* === רקע שקוף לקנבס === */
+    background-color: transparent; 
+    
+    font-family: sans-serif;
+    -webkit-font-smoothing: antialiased;
+
+    /* העלמת סמן העכבר */
+    cursor: none;
+
+    /* העלמת פס הגלילה */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    overflow-x: hidden;
+}
+
+/* העלמת פס הגלילה בכרום, ספארי ואדג' חדש */
+html::-webkit-scrollbar, body::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    background: transparent;
+}
+
+/* קנבס מקובע לרקע */
+canvas {
+    display: block;
+    position: fixed; 
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+/* סליידר (אם קיים) */
+input[type=range] {
+    position: fixed !important;
+    z-index: 9999;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* === העלמת פס הגלילה מכל האלמנטים באתר === */
+*::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    background: transparent;
+}
+
+* {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
